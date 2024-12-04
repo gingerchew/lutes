@@ -7,4 +7,9 @@ local function it(msg, test_fn)
     print(symbols:icon('entry')..msg, status and colors'%{green}Passed' or '%{red}Failed', err or '')
 end
 
+-- a noop method for tests that haven't been implemented yet
+-- function it.skip(msg)
+--     print(colors"%{dim}"..msg)
+-- end
+
 return it
