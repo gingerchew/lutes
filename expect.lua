@@ -21,7 +21,7 @@ local function expect(value)
         todo = todo_prox,
         toBe = function(v)
             if not (v == value) then
-                error("Value "..value.." did not match expected value "..v, 2)
+                error('Value mismatch', 2)
             end
         end,
         toBeDefined = function()
@@ -142,7 +142,7 @@ local function expect(value)
             -- that lua handles errors
         end,
         -- snapshot testing likely not useful
-        
+
     }
 end
 

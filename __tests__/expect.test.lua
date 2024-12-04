@@ -15,6 +15,13 @@ test.describe('@lutes/test', function (it, expect)
         expect(test.it).toBeType('function')
         expect(test.describe).toBeType('function')
     end)
+    -- this fails, is this because even though the module passed is the same
+    -- it registers as something different when comparing with ==
+    -- `it` currently is different when using the it in describe
+    it('should pass the same expect as arguments', function (expect2)
+        expect(test.expect).toBe(expect)
+        expect(expect).toBe(expect2)
+    end)
 end)
 
 test.describe('@lutes/describe', function (it, expect)
