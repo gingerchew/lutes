@@ -25,6 +25,7 @@ local function describe(msg, desc_fn)
         local start_time = os.clock()
         -- to match functionality with `test.it` pass expect at this level again
         local status, err = pcall(test_fn, expect)
+        -- need to format this better and make it not the responsibility of describe
         local dur = colors("%{dim}"..string.format("%.2f", (os.clock() - start_time) * 1000)..'ms ')
         if not status then
             has_errors = true
