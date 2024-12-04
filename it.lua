@@ -4,7 +4,7 @@ local symbols = require 'symbols'
 
 local function it(msg, test_fn)
     local status, err = pcall(test_fn, expect)
-    print(symbols:icon('entry_final')..msg, status and colors'%{green}Passed' or '%{red}Failed', err or '')
+    print(symbols:icon('entry_final')..msg, status and colors'%{bright}%{green}Passed' or '%{bright}%{red}Failed', err or '')
 end
 
 -- a noop method for tests that haven't been implemented yet
