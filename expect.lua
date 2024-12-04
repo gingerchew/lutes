@@ -123,6 +123,12 @@ local function expect(value)
                 end
             end
             if not found then error('Could not find key "'..key..'" in table', 2) end
+        end,
+        toMatch = function(pattern)
+            local found = string.match(value, pattern)
+            if found == nil then
+                error('Value "'..value..'" did not match with pattern "'..pattern..'"', 2)
+            end
         end
     }
 end
