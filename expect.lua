@@ -73,6 +73,9 @@ local function expect(value)
         toEqual = function(v)
             -- To be implemented
         end,
+        toStrictEqual = function(v)
+            -- To be implemented
+        end,
         toContain = function(item)
             local passed = false
             if type(value) == 'table' then
