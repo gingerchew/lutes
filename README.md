@@ -1,4 +1,6 @@
-# Lutes
+# Lutes /ʟutez/
+
+![image](https://github.com/user-attachments/assets/16bdd9a2-9184-483a-9ff3-3149f8a562ec)
 
 A `vitest`-like testing library for Lua
 
@@ -71,7 +73,7 @@ As the days waned on though, the problems got harder and harder. I decided to go
 
 Which I'm sure someone will figure out. Instead, I wrote a skeleton like script that implemented *most* of what I wanted from `vitest` and that helped me through the next couple challenges.
 
-## Where's my `.to`
+## Where's `.to`?
 
 For the uninitiated, `vitest` supports these two syntaxes:
 
