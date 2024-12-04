@@ -129,7 +129,20 @@ local function expect(value)
             if found == nil then
                 error('Value "'..value..'" did not match with pattern "'..pattern..'"', 2)
             end
-        end
+        end,
+        toMatchObject = function()
+            -- to be implemented
+            -- this is in depth seeming
+            -- probably hold off for now
+        end,
+        toThrowError = function ()
+            -- to be implemented
+            -- not sure how this will work with
+            -- pcall and the general way
+            -- that lua handles errors
+        end,
+        -- snapshot testing likely not useful
+        
     }
 end
 
