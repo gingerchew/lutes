@@ -85,4 +85,10 @@ test.describe('@lutes/test', function (it, expect)
         expect(test.expect).toBe(expect)
         expect(expect).toBe(expect2)
     end)
+
+    it('should run for a while to test the time formatting', function ()
+        -- should run for 3-4ms
+        for i = 1, 1000000, 1 do end
+        expect(1).toBe(1)
+    end)
 end)
