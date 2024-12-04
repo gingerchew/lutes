@@ -113,6 +113,16 @@ local function expect(value)
                     error('Table was larger than expected size ('..len..')', 2)
                 end
             end
+        end,
+        -- based on https://snippets.bentasker.co.uk/posts/lua/check-if-value-exists-in-table.html
+        toHaveProperty = function(key)
+            local found = false
+            for k,_ in pairs(value) do
+                if k == key then
+                    found = true
+                end
+            end
+            if not found then error('Could not find key "'..key..'" in table', 2) end
         end
     }
 end
