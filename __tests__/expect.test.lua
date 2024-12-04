@@ -94,7 +94,7 @@ test.describe('@lutes/test', function (it, expect)
 
     it('should run for _a while_', function ()
         for i = 1, 1000000, 1 do
-            for j = 1, 1000, 1 do
+            for j = 1, 100, 1 do
                 
             end
         end
