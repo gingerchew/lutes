@@ -99,3 +99,11 @@ Here are some short term goals:
 - [ ] Is there a better way to handle the message creation than string concat??
 - [ ] `assert`?
 - [ ] Assess best practices for Lua code writing and other such nonsense and buzz words
+- [ ] Figure out why the order of tests is changed sometimes
+```lua
+test.describe('my-mod', function(it, expect)
+    -- sometimes these will get swapped in order
+    it('should preserve order', function()end)
+    it('should run second', function()end)
+end)
+```
