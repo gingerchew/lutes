@@ -7,16 +7,21 @@ local colors = require 'ansicolors'
 
 -- Can this be done without making a huge concated string??
 local function describe(msg, desc_fn)
+    -- cue all the tests here first
     local test_table = {}
     local function it(test_msg, test_fn)
         test_table[test_msg] = test_fn
     end
+    -- prepare msgs var
     local msgs = ''
     local has_errors = false
+
+    -- run tests passing in the cue-ing it function and expect
     desc_fn(it, expect)
     for test_msg, test_fn in pairs(test_table) do
         local is_final = next(test_table, test_msg) == nil
-        local status, err = pcall(test_fn, it_runner)
+        -- to match functionality with `test.it` pass expect at this level again
+        local status, err = pcall(test_fn, expect)
 
         if not status then
             has_errors = true
@@ -27,9 +32,9 @@ local function describe(msg, desc_fn)
     end
     local print_msg = '\n'
     if has_errors then
-        print_msg = print_msg..symbols:icon('error_start')..' '..msg..'\n'
+        print_msg = print_msg..symbols:icon('error_start')..msg..'\n'
     else
-        print_msg = print_msg..symbols:icon('start')..' '..msg..'\n'
+        print_msg = print_msg..symbols:icon('start')..msg..'\n'
     end
     print_msg = print_msg..symbols:icon('wall')..msgs
     print(print_msg)
