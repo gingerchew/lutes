@@ -1,5 +1,13 @@
 local noop = function() end
 
+--[[
+    This set up works for now
+    but we're going to run into issues when 
+    implementing `.not.{expect api}` functionality
+
+    Rest of expect api to be implemented here [https://vitest.dev/api/expect.html#tocontain]
+]]
+
 local todo_prox = {}
 function todo_prox.__newindex()
     return noop
@@ -12,8 +20,7 @@ local function expect(value)
     return {
         todo = todo_prox,
         toBe = function(v)
-            local is_same = v == value
-            if not is_same then
+            if not (v == value) then
                 error("Value "..value.." did not match expected value "..v, 2)
             end
         end,
@@ -68,7 +75,6 @@ local function expect(value)
         end,
         toContain = function(item)
             local passed = false
-            local error_msg = ''
             if type(value) == 'table' then
                 for _,i in ipairs(value) do
                     if i == item then
@@ -76,20 +82,37 @@ local function expect(value)
                     end
                 end
                 if not passed then
-                    error_msg = 'Table '..value..' did not contain item '..item
+                    error('Table did not contain item '..item, 2)
                 end
-                return
             elseif type(value) == 'string' then
                 local starti = value:find(item)
+
                 if starti == nil then
-                    error_msg = 'String "'..value..'" did not contain substring "'..item..'"'
+                    error('String "'..value..'" did not contain substring "'..item..'"', 2)
                 end
-                return
-            else
-                error_msg = 'Value of type "'..type(value)..'" is not supported currently'
-            end
-            if not error_msg == '' then error(error_msg, 2) end
+            -- else
+            --     error_msg = 'Value of type "'..type(value)..'" is not supported currently'
             -- Add more if it makes sense for other types
+            end
+        end,
+        toContainEqual = function()
+            -- To be implemented
+            -- semi-relies on toEqual
+        end,
+        toHaveLength = function(len)
+            local t = type(value)
+            if t == 'string' then
+                if not (string.len(value) == len) then
+                    error('String '..value..' was longer than expected value ('..len..')', 2)
+                end
+            elseif t == "table" then
+                local count = 0
+                for _ in pairs(value) do count = count + 1 end
+
+                if not count == len then
+                    error('Table was larger than expected size ('..len..')', 2)
+                end
+            end
         end
     }
 end
