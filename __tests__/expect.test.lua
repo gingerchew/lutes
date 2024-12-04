@@ -7,7 +7,7 @@ test.it('should run individual tests', function (expect)
     expect(1).toBe(1)
 end)
 
-test.describe('@lutes/describe-all-pass', function (it, expect)
+test.describe('@lutes/mod', function (it, expect)
     it('should pass', function ()
         expect(1).toBe(1)
     end)
@@ -16,22 +16,6 @@ test.describe('@lutes/describe-all-pass', function (it, expect)
     end)
 end)
 
-test.describe('@lutes/test', function (it, expect)
-    it('should have defined methods it, expect, and describe', function()
-        expect(test.expect).toBeDefined()
-        expect(test.it).toBeDefined()
-        expect(test.expect).toBeType('function')
-        expect(test.it).toBeType('function')
-        expect(test.describe).toBeType('function')
-    end)
-    -- this fails, is this because even though the module passed is the same
-    -- it registers as something different when comparing with ==
-    -- `it` currently is different when using the it in describe
-    it('should pass the same expect as arguments', function (expect2)
-        expect(test.expect).toBe(expect)
-        expect(expect).toBe(expect2)
-    end)
-end)
 
 test.describe('@lutes/describe', function (it, expect)
     it('should pass it and expect to the callback function', function ()
@@ -85,3 +69,20 @@ test.describe('@lutes/expect', function(it, expect)
     end)
 end)
 
+
+test.describe('@lutes/test', function (it, expect)
+    it('should have defined methods it, expect, and describe', function()
+        expect(test.expect).toBeDefined()
+        expect(test.it).toBeDefined()
+        expect(test.expect).toBeType('function')
+        expect(test.it).toBeType('function')
+        expect(test.describe).toBeType('function')
+    end)
+    -- this fails, is this because even though the module passed is the same
+    -- it registers as something different when comparing with ==
+    -- `it` currently is different when using the it in describe
+    it('should pass the same expect as arguments', function (expect2)
+        expect(test.expect).toBe(expect)
+        expect(expect).toBe(expect2)
+    end)
+end)
