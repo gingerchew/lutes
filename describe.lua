@@ -1,9 +1,9 @@
 -- only use the runner in the context of describe
 -- pass in the inner it function to save tests locally
-local it_runner = require 'it'
 local expect = require 'expect'
 local symbols = require 'symbols'
 local colors = require 'ansicolors'
+
 
 -- Can this be done without making a huge concated string??
 local function describe(msg, desc_fn)
