@@ -25,16 +25,16 @@ local function describe(msg, desc_fn)
 
         if not status then
             has_errors = true
-            msgs = msgs..'\n'..symbols:icon(is_final and 'entry_error_final' or 'entry_error')..test_msg..' '..colors('%{red}'..err)
+            msgs = msgs..'\n'..symbols:icon(is_final and 'entry_error_final' or 'entry_error')..test_msg..' '..colors('%{red}%{bright}'..err)
         else
-            msgs = msgs..'\n'..symbols:icon(is_final and 'entry_final' or 'entry')..test_msg..' '..colors('%{green}Passed')
+            msgs = msgs..'\n'..symbols:icon(is_final and 'entry_final' or 'entry')..test_msg..' '..colors('%{green}%{bright}Passed')
         end
     end
     local print_msg = '\n'
     if has_errors then
-        print_msg = print_msg..symbols:icon('error_start')..msg..'\n'
+        print_msg = print_msg..symbols:icon('error_start')..colors('%{bright}%{red}'..msg)..'\n'
     else
-        print_msg = print_msg..symbols:icon('start')..msg..'\n'
+        print_msg = print_msg..symbols:icon('start')..colors('%{bright}%{green}'..msg)..'\n'
     end
     print_msg = print_msg..symbols:icon('wall')..msgs
     print(print_msg)
