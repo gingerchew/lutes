@@ -98,3 +98,4 @@ Here are some short term goals:
 - [ ] Finish adding support for the rest of `expect` functionality from `vitest`
 - [ ] Is there a better way to handle the message creation than string concat??
 - [ ] `assert`?
+- [ ] Assess best practices for Lua code writing and other such nonsense and buzz words
