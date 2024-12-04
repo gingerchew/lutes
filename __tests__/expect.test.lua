@@ -1,5 +1,9 @@
 local test = require('main')
 
+test.it('should run individual tests', function (expect)
+    expect(1).toBe(1)
+end)
+
 test.describe('@lutes/test', function (it, expect)
     it('should have defined methods it, expect, and describe', function()
         expect(test.expect).toBeDefined()
