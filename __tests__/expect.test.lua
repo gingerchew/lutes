@@ -1,5 +1,8 @@
 local test = require('main')
 
+-- uncomment to make sure it fails properly
+--test.expect(1).toBe(3)
+
 test.it('should run individual tests', function (expect)
     expect(1).toBe(1)
 end)
