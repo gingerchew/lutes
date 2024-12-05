@@ -81,18 +81,19 @@ test.describe('@lutes/test', function (it, expect)
     -- this fails, is this because even though the module passed is the same
     -- it registers as something different when comparing with ==
     -- `it` currently is different when using the it in describe
-    it('should pass the same expect as arguments', function (expect2)
+    it('should pass the same  expect as arguments', function (expect2)
         expect(test.expect).toBe(expect)
         expect(expect).toBe(expect2)
     end)
 
     it('should run for a while to test the time formatting', function ()
-        -- should run for 3-4ms
+        -- should register as 2-4ms
         for i = 1, 1000000, 1 do end
         expect(1).toBe(1)
     end)
 
     it('should run for _a while_', function ()
+        -- should register as about 200-400ms
         for i = 1, 1000000, 1 do
             for j = 1, 100, 1 do
                 
