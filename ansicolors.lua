@@ -28,6 +28,7 @@ local function isWindows()
 end
 
 local supported = not isWindows()
+---@diagnostic disable-next-line: cast-local-type
 if isWindows() then supported = os.getenv("ANSICON") end
 
 local keys = {
@@ -84,7 +85,7 @@ local function escapeKeys(str)
 end
 
 local function replaceCodes(str)
-    str = string.gsub(str,"(%%{(.-)})", function(_, str) return escapeKeys(str) end )
+    str = string.gsub(str,"(%%{(.-)})", function(_, s) return escapeKeys(s) end )
     return str
 end
 
