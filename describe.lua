@@ -65,14 +65,16 @@ function Describe:test(msg)
     end
 
     -- string formatting like this sucks
-    local print_msg = '\n'
-    if self.has_errors then
-        print_msg = print_msg..symbols:icon('error_start')..colors('%{bright}%{red}'..msg)..'\n'
-    else
-        print_msg = print_msg..symbols:icon('start')..colors('%{bright}%{green}'..msg)..'\n'
-    end
+    local print_msg = self:print(msg)
 
-    return print_msg..symbols:icon('wall')..msgs
+    return print_msg..msgs
+end
+
+function Describe:print(msg)
+    local icon = self.has_errors and symbols:icon('error_start') or symbols:icon('start')
+    msg = self.has_errors and colors('%{bright}%{red}'..msg) or colors('%{bright}%{green}'..msg)
+
+    return '\n'..icon..msg..'\n'..symbols:icon('wall')
 end
 
 local function describe(msg, desc_fn)
