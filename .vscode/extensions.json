@@ -1,0 +1,8 @@
+{
+    "recommendations": [
+        "sumneko.lua",
+        "tomblind.local-lua-debugger-vscode",
+        "editorconfig.editorconfig",
+        "vivaxy.vscode-conventional-commits"
+    ]
+}
