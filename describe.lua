@@ -4,13 +4,15 @@ local expect = require 'expect'
 local symbols = require 'symbols'
 local colors = require 'ansicolors'
 
-
+---@class Describe
 local Describe = {}
 
+---@param msg string
+---@param desc_fn function
 function Describe:new(msg, desc_fn)
     self.__fns = {}
     self.has_errors = false
-    
+
     desc_fn(function(test_msg, test_fn)
         self.__fns[test_msg] = test_fn
     end, expect)
@@ -29,6 +31,8 @@ function Describe:dur()
     end
 end
 
+---@param test_msg string
+---@param test_fn function
 function Describe:run(test_msg, test_fn)
     local is_final = next(self.__fns, test_msg) == nil
     local get_dur = self:dur()
@@ -44,6 +48,8 @@ function Describe:run(test_msg, test_fn)
     end
 end
 
+---@param msg string
+---@return string
 function Describe:test(msg)
     local msgs = ''
 
@@ -70,6 +76,8 @@ function Describe:test(msg)
     return print_msg..msgs
 end
 
+---@param msg string
+---@return string
 function Describe:print(msg)
     local icon = self.has_errors and symbols:icon('error_start') or symbols:icon('start')
     msg = self.has_errors and colors('%{bright}%{red}'..msg) or colors('%{bright}%{green}'..msg)
@@ -77,6 +85,8 @@ function Describe:print(msg)
     return '\n'..icon..msg..'\n'..symbols:icon('wall')
 end
 
+---@param msg string
+---@param desc_fn function
 local function describe(msg, desc_fn)
     Describe:new(msg, desc_fn)
 end
