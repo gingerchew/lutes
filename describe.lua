@@ -9,20 +9,13 @@ local Describe = {}
 
 function Describe:new(msg, desc_fn)
     self.__fns = {}
-
+    self.has_errors = false
+    
     desc_fn(function(test_msg, test_fn)
         self.__fns[test_msg] = test_fn
     end, expect)
-    -- messing with coroutines
-    -- is this useful? is this good? to be seen
-    -- I could see it being more useful inside of :run
-    local co = coroutine.create(function()
-        local print_msg = self:run(msg)
-        coroutine.yield(print_msg)
-    end)
 
-    local _, print_msg = coroutine.resume(co)
-
+    local print_msg = self:test(msg)
     print(print_msg)
 end
 
@@ -36,28 +29,44 @@ function Describe:dur()
     end
 end
 
-function Describe:run(msg)
-    local has_errors = false
+function Describe:run(test_msg, test_fn)
+    local is_final = next(self.__fns, test_msg) == nil
+    local get_dur = self:dur()
+    local status, err = pcall(test_fn, expect)
+    local dur = get_dur()
+
+    if not status then
+        self.has_errors = true
+
+        coroutine.yield(test_msg, '\n'..symbols:icon(is_final and 'entry_error_final' or 'entry_error')..dur..test_msg..colors("%{red}%{bright} "..err))
+    else
+        coroutine.yield(test_msg, '\n'..symbols:icon(is_final and 'entry_final' or 'entry')..dur..test_msg..colors("%{green}%{bright} Passed"))
+    end
+end
+
+function Describe:test(msg)
     local msgs = ''
 
-    -- maybe this could be moved into a coroutine?
-    for test_msg, test_fn in pairs(self.__fns) do
-        local is_final = next(self.__fns, test_msg) == nil
-        local get_dur = self:dur()
-        local status, err = pcall(test_fn, expect)
-
-
-        if not status then
-            has_errors = true
-            msgs = msgs..'\n'..symbols:icon(is_final and 'entry_error_final' or 'entry_error')..get_dur()..test_msg..colors("%{red}%{bright} "..err)
-        else
-            msgs = msgs..'\n'..symbols:icon(is_final and 'entry_final' or 'entry')..get_dur()..test_msg..colors('%{green}%{bright} Passed')
+    -- Create coroutine
+    -- yielding inside of :run will propagate
+    local co = coroutine.create(function ()
+        for test_msg, test_fn in pairs(self.__fns) do
+            self:run(test_msg, test_fn)
         end
+    end)
+
+    -- get the first index of the loop and
+    -- then while through the self.__fns table
+    local index = next(self.__fns);
+    while not (index == nil) do
+        local _, prev_index, result_msg = coroutine.resume(co)
+        msgs = msgs..result_msg
+        index = next(self.__fns, prev_index)
     end
 
     -- string formatting like this sucks
     local print_msg = '\n'
-    if has_errors then
+    if self.has_errors then
         print_msg = print_msg..symbols:icon('error_start')..colors('%{bright}%{red}'..msg)..'\n'
     else
         print_msg = print_msg..symbols:icon('start')..colors('%{bright}%{green}'..msg)..'\n'
